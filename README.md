@@ -1,7 +1,9 @@
 Anonvote
 ========
 
-A centralized anonymous voting SNAPP (SNARK App) implemented using [Snarky](https://github.com/o1-labs/snarky). Anonvote allows anonymous users to vote on elections in a way that prevents other participants on the network (including the centralized server that connects the network together) from identifying other voters. Voters are able to create elections, restrict who can vote in elections (for instance, create an election only women can participate in), and tally the results of any election, whether they were the creator or not.
+A fork of the centralized anonymous voting SNAPP by O(1) Labs where circom and snarkjs is used instead of snarky. Prepared for the Zero-Knowledge Toronto meetup.
+
+Anonvote allows anonymous users to vote on elections in a way that prevents other participants on the network (including the centralized server that connects the network together) from identifying other voters. Voters are able to create elections, restrict who can vote in elections (for instance, create an election only women can participate in), and tally the results of any election, whether they were the creator or not.
 
 ### Architecture
 
