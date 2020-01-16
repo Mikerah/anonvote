@@ -1,13 +1,12 @@
 import chalk from 'chalk'
 import {Client as WebSocketClient} from 'rpc-websockets'
-import Snarky from 'snarkyjs'
+import zkSnark from "snarkjs"
 import {bn128} from 'snarkyjs-crypto'
 
 import {AttributeMask} from './data/voter_attributes'
 import Election from './data/Election'
 import ElectionDB from './data/ElectionDB'
 import NetworkState from './data/NetworkState'
-import SnarkKeys from './data/SnarkKeys'
 import Vote from './data/Vote'
 import Voter from './data/Voter'
 
@@ -22,10 +21,10 @@ var serverUri = process.argv.length >= 4 ? process.argv[3] : 'localhost:8080'
 if(serverUri.indexOf('ws://') !== 0)
   serverUri = 'ws://' + serverUri
 
-// TODO: take in positional CLI arg for server address
 const voter = new Voter(process.argv[2])
-const snarkProcess = new Snarky('src/snark.exe')
 const ws = new WebSocketClient(serverUri)
+
+// TODO: Need to load in a circuit file
 
 function parseAnswer(answer) {
   switch(answer) {
@@ -125,6 +124,8 @@ function run(merkleTreeRoot, electionDb) {
 
       const vote = new Vote(voter, election, parseAnswer(answer))
 
+      // TODO: Generate a proof and return the output.
+      // Hint: Use the below code to help you out. The equivalent code using snarkjs should be simpler.
       return snarkProcess.prove({
         statement: vote.statement(merkleTreeRoot, election),
         witness: voter.witness()

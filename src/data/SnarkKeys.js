@@ -1,3 +1,4 @@
+// Hint: You can modify this file to work with snarkjs keys instead and use it for the registrar code solution
 import fs from 'fs'
 import md5 from 'js-md5'
 

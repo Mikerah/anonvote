@@ -1,4 +1,4 @@
-import Snarky from 'snarkyjs'
+// This file is mostly left unchanged. As an exercise, try changing to make sure you're changes work.
 
 import Election from './data/Election'
 import Vote from './data/Vote'
@@ -6,7 +6,6 @@ import Voter from './data/Voter'
 import VoterRegistry from './data/VoterRegistry'
 import {AttributeMask} from './data/voter_attributes'
 
-const snarkProcess = new Snarky('src/snark.exe')
 const voterRegistry = new VoterRegistry()
 
 const ada = new Voter('ada.json')

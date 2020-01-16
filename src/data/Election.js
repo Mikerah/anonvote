@@ -1,4 +1,4 @@
-import {bn128} from 'snarkyjs-crypto'
+import {BN128} from 'snarkjs'
 
 import hashString from '../util/hashString'
 import {AttributeMask} from './voter_attributes'
@@ -7,7 +7,8 @@ export default class Election {
   constructor(summary, attributeMask) {
     this.summary = summary
     this.attributeMask = attributeMask
-    this.commitment = bn128.Hash.hash([hashString(summary)].concat(attributeMask.witness()))
+    // TODO: This may not work. Try to figure out how to fix it
+    this.commitment = BN128.Hash.hash([hashString(summary)].concat(attributeMask.witness()))
     this.votes = []
     this.ballots = new Set()
   }

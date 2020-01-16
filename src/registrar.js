@@ -1,10 +1,9 @@
 import {Server as WebSocketServer} from 'rpc-websockets'
-import Snarky from 'snarkyjs'
+import zkSnark from "snarkjs"
 
 import Election from './data/Election'
 import ElectionDB from './data/ElectionDB'
 import NetworkState from './data/NetworkState'
-import SnarkKeys from './data/SnarkKeys'
 import Vote from './data/Vote'
 import VoterRegistry from './data/VoterRegistry'
 
@@ -12,7 +11,6 @@ import repl from './util/repl'
 
 const port = process.argv.length >= 3 ? process.argv[2] : '8080'
 
-const snarkProcess = new Snarky('src/snark.exe')
 const voterRegistry = new VoterRegistry()
 const electionDb = new ElectionDB()
 var networkState = NetworkState.Registration
@@ -41,15 +39,15 @@ function setupServer(snarkKeys) {
   // init: returns initial state information
   ws.register('init', () => ({
     networkState,
-    snarkKeysHash: snarkKeys.keysHash,
+    snarkKeysHash: // TODO: Create some representation or object for the proving and verification keys. They go here
     elections: electionDb.dump().map((e) => e.toJson()),
     votes: electionDb.dump().map((e) => e.votes.map((v) => v.toJson())).flat()
   }))
 
   // getKeys: returns proving and verification keys
   ws.register('getKeys', () => ({
-    provingKey: snarkKeys.provingKey,
-    verificationKey: snarkKeys.verificationKey
+  provingKey: // TODO: Using your object/representation for proving and verification keys, assign the proving key to this object,
+  verificationKey: // TODO: The same as above but assign your verification key 
   }))
 
   // register: register a new commitment to a voter
@@ -98,6 +96,7 @@ function setupServer(snarkKeys) {
     // if(!membershipProof)
     //   throw new Error('voter is not a member')
 
+    // TODO: Using snarkjs, verify the proof given the below inputs. Use the snarky code as a hint. Note that your solution should be simpler.
     return snarkProcess.verify({
       statement: vote.statement(voterRegistry.merkleTreeRoot(), election),
       proof
@@ -159,6 +158,5 @@ snarkProcess.generate_keys()
       .catch((err) => console.error('FATAL ERROR:', err))
       .then(() => {
         server.ws.close()
-        snarkProcess.kill()
       })
 })

@@ -1,4 +1,4 @@
-import {bn128} from 'snarkyjs-crypto'
+import {BN128} from 'snarkjs'
 
 import hashString from '../util/hashString'
 
@@ -24,7 +24,7 @@ export default class Vote {
       merkleTreeRoot,
       this.ballot,
       hashString(this.answer),
-      election.attributeMask.mask.map((c) => c ? hashString(c) : bn128.Field.zero),
+      election.attributeMask.mask.map((c) => c ? hashString(c) : BN128.Field.zero),
       this.electionCommitment
     ]
   }
@@ -50,9 +50,10 @@ Vote.fromJson = function(json) {
 
   return {
     __proto__: Vote.prototype,
-    voterCommitment: bn128.Field.ofString(json.voterCommitment),
-    electionCommitment: bn128.Field.ofString(json.electionCommitment),
-    ballot: bn128.Field.ofString(json.ballot),
+    // TODO: Ensure that these types work. Sorry, didn't have the time to validate this.
+    voterCommitment: BN128.Field.ofString(json.voterCommitment),
+    electionCommitment: BN128.Field.ofString(json.electionCommitment),
+    ballot: BN128.Field.ofString(json.ballot),
     answer: json.answer
   }
 }
